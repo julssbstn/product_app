@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:product_app/components/product_details_widget.dart';
+import 'package:product_app/models/product.dart';
 import 'package:product_app/models/product_details.dart';
 import 'package:product_app/models/products.dart';
 
@@ -69,7 +70,8 @@ class _ProductListWidgetState extends State<ProductListWidget> {
 
             return _buildList(_products);
           } else {
-            return const Center(child: Text('Loading ...'));
+            return const Center(
+                key: const Key("LoadingWidget"), child: Text('Loading ...'));
           }
         },
       ),
@@ -100,10 +102,12 @@ class _ProductListWidgetState extends State<ProductListWidget> {
               leading: SizedBox(
                 height: 50.0,
                 width: 50.0,
-                child: Image.network(
-                  list[index].thumbnail.toString(),
-                  fit: BoxFit.fill,
-                ),
+                child: list[index].thumbnail != null
+                    ? Image.network(
+                        list[index].thumbnail.toString(),
+                        fit: BoxFit.fill,
+                      )
+                    : Container(),
               ),
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.end,

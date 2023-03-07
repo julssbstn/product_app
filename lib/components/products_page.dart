@@ -33,6 +33,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const Key("ProductsPage"),
       appBar: AppBar(
         title: Text(widget.title),
       ),
