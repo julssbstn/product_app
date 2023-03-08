@@ -19,9 +19,8 @@ void main() {
       (WidgetTester tester) async {
     Map<String, dynamic> rawData = {};
     final fromJson = Products.fromJson(rawData);
-    final isProducts = fromJson is Products;
 
-    expect(isProducts, isTrue);
+    expect(fromJson, isA<Products>());
     expect(fromJson.toString(), Products(products: []).toString());
   });
 }

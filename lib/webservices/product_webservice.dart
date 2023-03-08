@@ -5,12 +5,22 @@ import 'dart:convert';
 import 'package:product_app/models/products.dart';
 
 class ProductWebService {
-  Future<Products> getProducts(num limit, num skip) async {
+  var client;
+  ProductWebService() {
+    this.client = client ?? http.Client();
+  }
+
+  Future<Products> getProducts(
+    num limit,
+    num skip, {
+    http.Client? client,
+  }) async {
     try {
+      final httpClient = client ?? http.Client();
       final url =
           "https://dummyjson.com/products?limit=$limit&skip=$skip&select=title,price,thumbnail,stock,discountPercentage";
 
-      var response = await http.get(
+      var response = await httpClient.get(
         Uri.parse(url),
         headers: {
           "Content-Type": "application/json",
@@ -30,11 +40,15 @@ class ProductWebService {
     }
   }
 
-  Future<ProductDetails> getProductDetails(num id) async {
+  Future<ProductDetails> getProductDetails(
+    num id, {
+    http.Client? client,
+  }) async {
     try {
+      final httpClient = client ?? http.Client();
       final url = "https://dummyjson.com/products/$id";
 
-      var response = await http.get(
+      var response = await httpClient.get(
         Uri.parse(url),
         headers: {
           "Content-Type": "application/json",

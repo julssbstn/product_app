@@ -22,7 +22,9 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
   @override
   void initState() {
     super.initState();
-    _displayedImage = widget.details!.images!.first;
+    if (widget.details?.images?.isNotEmpty ?? false) {
+      _displayedImage = widget.details!.images!.first;
+    }
   }
 
   @override
@@ -97,12 +99,14 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "${widget.details!.title}",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
+              Expanded(
+                child: Text(
+                  "${widget.details!.title}",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                  ),
                 ),
               ),
               Text(

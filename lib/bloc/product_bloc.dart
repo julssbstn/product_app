@@ -6,7 +6,11 @@ import 'package:product_app/models/products.dart';
 import 'package:product_app/webservices/product_webservice.dart';
 
 class ProductBloc implements Bloc {
-  ProductWebService service = ProductWebService();
+  ProductWebService? _service;
+
+  ProductBloc({ProductWebService? service}) {
+    this._service = service ?? ProductWebService();
+  }
 
   final _productListController = StreamController<Products>();
   Stream<Products> get productStream => _productListController.stream;
@@ -14,12 +18,10 @@ class ProductBloc implements Bloc {
   final _pageController = StreamController<num>();
   Stream<num?> get pageStream => _pageController.stream;
 
-  void onPageChanged(num page) {
-    print(page);
-  }
-
   Future<void> getProducts({num limit = 10, num skip = 0}) async {
     try {
+      final service = this._service ?? ProductWebService();
+
       Products products = await service.getProducts(limit, skip);
       _productListController.sink.add(products);
     } catch (e) {
@@ -29,6 +31,8 @@ class ProductBloc implements Bloc {
 
   Future<ProductDetails> getProductDetails(num id) async {
     try {
+      final service = this._service ?? ProductWebService();
+
       ProductDetails details = await service.getProductDetails(id);
       return details;
     } catch (e) {
